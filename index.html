@@ -101,7 +101,7 @@
         QRCode.toCanvas(document.getElementById("instaQR"), "https://instagram.com/uditsingh118");
 
         // Snapchat QR (fixed with official link)
-        QRCode.toCanvas(document.getElementById("snapQR"), "https://www.snapchat.com/add/udit_s788");
+        QRCode.toCanvas(document.getElementById("snapQR"), "https://www.snapchat.com/add/udit_s788?share_id=CGijCXogTRE&locale=en-GB");
 
         // vCard QR for Contact
         const vCardData = `
@@ -111,13 +111,12 @@ N:Singh;Udit;;;
 FN:Udit Singh
 TEL;TYPE=CELL:+13659988571
 EMAIL:udit75765@gmail.com
-URL:https://instagram.com/uditsingh118
-NOTE:Snapchat: udit_s788
 END:VCARD
     `.trim();
 
         QRCode.toCanvas(document.getElementById("contactQR"), vCardData);
     </script>
 </body>
+
 
 </html>
