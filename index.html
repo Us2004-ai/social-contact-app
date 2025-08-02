@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Social Contact Card</title>
+    <link rel="manifest" href="manifest.json" />
+    <link rel="icon" href="icon.png" />
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #74ebd5, #acb6e5);
+            min-height: 100vh;
+            padding: 2rem 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            color: #ffffff;
+            margin-bottom: 2rem;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        .qr-section {
+            background: #ffffff;
+            padding: 1.5rem;
+            border-radius: 16px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            margin-bottom: 2rem;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        canvas {
+            margin-top: 10px;
+        }
+
+        h2 {
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        p {
+            margin: 0.5rem 0;
+            color: #555;
+        }
+
+        strong {
+            color: #222;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Connect with Me</h1>
+
+    <!-- Instagram -->
+    <div class="qr-section">
+        <h2>Instagram</h2>
+        <p><a href="https://instagram.com/uditsingh118" target="_blank">@uditsingh118</a></p>
+        <canvas id="instaQR"></canvas>
+    </div>
+
+    <!-- Snapchat -->
+    <div class="qr-section">
+        <h2>Snapchat</h2>
+        <p><a href="https://www.snapchat.com/add/udit_s788" target="_blank">udit_s788</a></p>
+        <canvas id="snapQR"></canvas>
+    </div>
+
+    <!-- Contact -->
+    <div class="qr-section">
+        <h2>Contact</h2>
+        <p>Phone: <strong>+1 365-998-8571</strong></p>
+        <p>Email: <strong>udit75765@gmail.com</strong></p>
+        <canvas id="contactQR"></canvas>
+    </div>
+
+    <!-- QR Code Generator -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+    <script>
+        // Instagram QR
+        QRCode.toCanvas(document.getElementById("instaQR"), "https://instagram.com/uditsingh118");
+
+        // Snapchat QR (fixed with official link)
+        QRCode.toCanvas(document.getElementById("snapQR"), "https://www.snapchat.com/add/udit_s788");
+
+        // vCard QR for Contact
+        const vCardData = `
+BEGIN:VCARD
+VERSION:3.0
+N:Singh;Udit;;;
+FN:Udit Singh
+TEL;TYPE=CELL:+13659988571
+EMAIL:udit75765@gmail.com
+URL:https://instagram.com/uditsingh118
+NOTE:Snapchat: udit_s788
+END:VCARD
+    `.trim();
+
+        QRCode.toCanvas(document.getElementById("contactQR"), vCardData);
+    </script>
+</body>
+
+</html>
