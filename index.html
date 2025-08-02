@@ -2,121 +2,151 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Social Contact Card</title>
-    <link rel="manifest" href="manifest.json" />
-    <link rel="icon" href="icon.png" />
-    <style>
-        * {
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Social Contact Card</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="icon.png" />
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
-        body {
-            margin: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #74ebd5, #acb6e5);
-            min-height: 100vh;
-            padding: 2rem 1rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      min-height: 100vh;
+      padding: 2rem 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: background 0.5s, color 0.5s;
+    }
 
-        h1 {
-            color: #ffffff;
-            margin-bottom: 2rem;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
-        }
+    body.light-mode {
+      background: linear-gradient(135deg, #74ebd5, #acb6e5);
+      color: #222;
+    }
 
-        .qr-section {
-            background: #ffffff;
-            padding: 1.5rem;
-            border-radius: 16px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-            margin-bottom: 2rem;
-            width: 90%;
-            max-width: 400px;
-            text-align: center;
-        }
+    body.dark-mode {
+      background: linear-gradient(135deg, #1f1f1f, #3c3c3c);
+      color: #f1f1f1;
+    }
 
-        canvas {
-            margin-top: 10px;
-        }
+    h1 {
+      margin-bottom: 2rem;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+    }
 
-        h2 {
-            margin-bottom: 0.5rem;
-            color: #333;
-        }
+    .qr-section {
+      background: #ffffff;
+      color: #000;
+      padding: 1.5rem;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      margin-bottom: 2rem;
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+      transition: background 0.5s, color 0.5s;
+    }
 
-        a {
-            color: #007bff;
-            text-decoration: none;
-        }
+    body.dark-mode .qr-section {
+      background: #2a2a2a;
+      color: #f1f1f1;
+    }
 
-        a:hover {
-            text-decoration: underline;
-        }
+    canvas {
+      margin-top: 10px;
+    }
 
-        p {
-            margin: 0.5rem 0;
-            color: #555;
-        }
+    h2 {
+      margin-bottom: 0.5rem;
+    }
 
-        strong {
-            color: #222;
-        }
-    </style>
+    a {
+      color: #007bff;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .theme-toggle {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+    }
+
+    button {
+      background: #fff;
+      border: 1px solid #ccc;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    body.dark-mode button {
+      background: #444;
+      color: #fff;
+      border-color: #666;
+    }
+  </style>
 </head>
 
-<body>
-    <h1>Connect with Me</h1>
+<body class="light-mode">
+  <div class="theme-toggle">
+    <button onclick="toggleTheme()">🌓 Toggle Theme</button>
+  </div>
 
-    <!-- Instagram -->
-    <div class="qr-section">
-        <h2>Instagram</h2>
-        <p><a href="https://instagram.com/uditsingh118" target="_blank">@uditsingh118</a></p>
-        <canvas id="instaQR"></canvas>
-    </div>
+  <h1>Connect with Me</h1>
 
-    <!-- Snapchat -->
-    <div class="qr-section">
-        <h2>Snapchat</h2>
-        <p><a href="https://www.snapchat.com/add/udit_s788" target="_blank">udit_s788</a></p>
-        <canvas id="snapQR"></canvas>
-    </div>
+  <!-- Instagram -->
+  <div class="qr-section">
+    <h2>Instagram</h2>
+    <p><a href="https://instagram.com/uditsingh118" target="_blank">@uditsingh118</a></p>
+    <canvas id="instaQR"></canvas>
+  </div>
 
-    <!-- Contact -->
-    <div class="qr-section">
-        <h2>Contact</h2>
-        <p>Phone: <strong>+1 365-998-8571</strong></p>
-        <p>Email: <strong>udit75765@gmail.com</strong></p>
-        <canvas id="contactQR"></canvas>
-    </div>
+  <!-- Snapchat -->
+  <div class="qr-section">
+    <h2>Snapchat</h2>
+    <p><a href="https://www.snapchat.com/add/udit_s788" target="_blank">udit_s788</a></p>
+    <canvas id="snapQR"></canvas>
+  </div>
 
-    <!-- QR Code Generator -->
-    <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
-    <script>
-        // Instagram QR
-        QRCode.toCanvas(document.getElementById("instaQR"), "https://instagram.com/uditsingh118");
+  <!-- Contact -->
+  <div class="qr-section">
+    <h2>Contact</h2>
+    <p>Phone: <strong>+1 365-998-8571</strong></p>
+    <p>Email: <strong>udit75765@gmail.com</strong></p>
+    <canvas id="contactQR"></canvas>
+  </div>
 
-        // Snapchat QR (fixed with official link)
-        QRCode.toCanvas(document.getElementById("snapQR"), "https://www.snapchat.com/add/udit_s788?share_id=CGijCXogTRE&locale=en-GB");
-
-        // vCard QR for Contact
-        const vCardData = `
+  <!-- QR Code Generator -->
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+  <script>
+    // QR codes
+    QRCode.toCanvas(document.getElementById("instaQR"), "https://instagram.com/uditsingh118");
+    QRCode.toCanvas(document.getElementById("snapQR"), "https://www.snapchat.com/add/udit_s788");
+    const vCardData = `
 BEGIN:VCARD
 VERSION:3.0
 N:Singh;Udit;;;
 FN:Udit Singh
 TEL;TYPE=CELL:+13659988571
 EMAIL:udit75765@gmail.com
-END:VCARD
-    `.trim();
+END:VCARD`.trim();
+    QRCode.toCanvas(document.getElementById("contactQR"), vCardData);
 
-        QRCode.toCanvas(document.getElementById("contactQR"), vCardData);
-    </script>
+    // Theme toggle
+    function toggleTheme() {
+      const body = document.body;
+      body.classList.toggle("dark-mode");
+      body.classList.toggle("light-mode");
+    }
+  </script>
 </body>
-
 
 </html>
